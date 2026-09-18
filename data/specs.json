@@ -1,0 +1,24 @@
+[
+  {
+    "id": "a608e913-1a6b-4c35-aa53-af5db62c9806",
+    "title": "정보처리기사 취득",
+    "category": "자격증",
+    "status": "완료",
+    "progress": 100,
+    "dueDate": "",
+    "note": "",
+    "createdAt": "2026-09-18T08:04:21.122Z",
+    "updatedAt": "2026-09-18T08:04:21.122Z"
+  },
+  {
+    "id": "sample-portfolio",
+    "title": "개발 포트폴리오 리뉴얼",
+    "category": "프로젝트",
+    "status": "완료",
+    "progress": 100,
+    "dueDate": "2026-10-15",
+    "note": "대표 프로젝트 3개를 문제 해결 과정 중심으로 정리",
+    "createdAt": "2026-09-01T09:00:00.000Z",
+    "updatedAt": "2026-09-18T08:05:57.877Z"
+  }
+]

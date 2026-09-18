@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="커리어 스펙을 기록하고 성장을 관리하는 대시보드" />
+    <title>Carrier — 나의 커리어 스펙</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <a class="brand" href="#" aria-label="Carrier 홈"><span class="brand-mark">C</span><span>carrier</span></a>
+        <nav class="main-nav" aria-label="주 메뉴">
+          <a class="nav-item active" href="#dashboard"><span class="nav-icon">⌂</span><span>대시보드</span></a>
+          <a class="nav-item" href="#specs"><span class="nav-icon">◇</span><span>내 스펙</span><span class="nav-count" id="navCount">0</span></a>
+          <a class="nav-item" href="#roadmap"><span class="nav-icon">↗</span><span>성장 로드맵</span></a>
+        </nav>
+        <div class="sidebar-note"><span class="note-icon">✦</span><strong>오늘의 한 걸음</strong><p>작은 기록이 커리어의 방향을 선명하게 만들어요.</p></div>
+        <div class="profile-mini"><span class="avatar">ME</span><span><strong>나의 커리어</strong><small>꾸준히 성장 중</small></span></div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <button class="icon-button menu-button" id="menuButton" aria-label="메뉴 열기">☰</button>
+          <div class="mobile-brand">carrier</div>
+          <div class="top-actions">
+            <button class="icon-button" aria-label="알림">♢<span class="notification-dot"></span></button>
+            <button class="primary-button" data-open-modal><span>＋</span> 새 스펙 추가</button>
+          </div>
+        </header>
+
+        <div class="page-content" id="dashboard">
+          <section class="hero">
+            <div>
+              <p class="eyebrow">MY CAREER DASHBOARD</p>
+              <h1>안녕하세요!<br /><span>오늘도 한 칸</span> 성장해볼까요?</h1>
+              <p class="hero-copy">흩어진 경험과 목표를 한눈에 정리하고,<br class="desktop-only" /> 나만의 커리어를 차근차근 완성하세요.</p>
+            </div>
+            <div class="hero-progress" aria-label="전체 진행률">
+              <svg viewBox="0 0 120 120" role="img"><circle class="progress-track" cx="60" cy="60" r="50"></circle><circle class="progress-value" id="heroProgressRing" cx="60" cy="60" r="50"></circle></svg>
+              <div><strong id="heroProgress">0%</strong><span>전체 진행률</span></div>
+            </div>
+          </section>
+
+          <section class="stats-grid" aria-label="스펙 요약">
+            <article class="stat-card coral"><div class="stat-icon">✓</div><div><span>완료한 스펙</span><strong id="completedCount">0</strong><small>개</small></div></article>
+            <article class="stat-card violet"><div class="stat-icon">↗</div><div><span>진행 중</span><strong id="ongoingCount">0</strong><small>개</small></div></article>
+            <article class="stat-card yellow"><div class="stat-icon">◎</div><div><span>계획한 목표</span><strong id="plannedCount">0</strong><small>개</small></div></article>
+            <article class="stat-card mint"><div class="stat-icon">▥</div><div><span>전체 항목</span><strong id="totalCount">0</strong><small>개</small></div></article>
+          </section>
+
+          <section class="spec-section" id="specs">
+            <div class="section-heading">
+              <div><p class="eyebrow">MY SPEC LIST</p><h2>나의 스펙 현황</h2></div>
+              <div class="list-controls">
+                <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="스펙 검색" /></label>
+                <select id="categoryFilter" aria-label="카테고리 필터"><option value="all">전체 카테고리</option><option>자격증</option><option>어학</option><option>프로젝트</option><option>교육</option><option>수상</option></select>
+              </div>
+            </div>
+            <div class="filter-tabs" role="tablist" aria-label="상태 필터">
+              <button class="filter-tab active" data-status="all">전체 <span id="allBadge">0</span></button>
+              <button class="filter-tab" data-status="진행 중">진행 중</button><button class="filter-tab" data-status="계획">계획</button><button class="filter-tab" data-status="완료">완료</button>
+            </div>
+            <div class="spec-list" id="specList" aria-live="polite"></div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <div class="modal-backdrop" id="specModal" hidden>
+      <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-header"><div><p class="eyebrow">NEW MILESTONE</p><h2 id="modalTitle">새 스펙 추가</h2></div><button class="close-button" type="button" data-close-modal aria-label="닫기">×</button></div>
+        <form id="specForm">
+          <label class="field full"><span>스펙 이름</span><input name="title" maxlength="80" placeholder="예: 정보처리기사 취득" required /></label>
+          <div class="form-row">
+            <label class="field"><span>카테고리</span><select name="category" required><option value="">선택해 주세요</option><option>자격증</option><option>어학</option><option>프로젝트</option><option>교육</option><option>수상</option></select></label>
+            <label class="field"><span>상태</span><select name="status" required><option>계획</option><option>진행 중</option><option>완료</option></select></label>
+          </div>
+          <div class="form-row"><label class="field"><span>진행률 (%)</span><input name="progress" type="number" min="0" max="100" value="0" /></label><label class="field"><span>목표일</span><input name="dueDate" type="date" /></label></div>
+          <label class="field full"><span>메모</span><textarea name="note" maxlength="240" rows="3" placeholder="목표나 다음 행동을 기록해 보세요."></textarea></label>
+          <p class="form-error" id="formError" role="alert"></p>
+          <div class="modal-actions"><button type="button" class="secondary-button" data-close-modal>취소</button><button class="primary-button" type="submit">추가하기</button></div>
+        </form>
+      </section>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+  </body>
+</html>
