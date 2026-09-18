@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="지원 기업과 내 커리어 스펙 비교" />
+    <title>Carrier — 기업 분석</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/common.css" />
+    <link rel="stylesheet" href="/css/company-analysis.css" />
+    <script src="/js/common.js" defer></script>
+    <script src="/js/company-analysis.js" defer></script>
+  </head>
+  <body data-page="company">
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar"></aside>
+      <main class="main-content">
+        <button class="menu-button floating-menu" id="menuButton" aria-label="메뉴 열기">☰</button>
+        <div class="page-content">
+          <section class="page-hero">
+            <div><p class="kicker">CAREER BENCHMARK</p><h1>기업 · 스펙 비교</h1><p>지원 기업과 직무를 기준으로 내 경험의 강점과 보완점을 비교하는 공간입니다.</p></div>
+            <span class="page-hero-icon">◎</span>
+          </section>
+
+          <section class="company-grid">
+            <form class="workspace-card" id="companyCompareForm">
+              <div class="workspace-title"><span>01</span><div><h2>비교 기준 설정</h2><p>분석할 기업과 목표 직무를 입력하세요.</p></div></div>
+              <label class="field"><span>기업명</span><input id="companyName" required placeholder="예: 카카오" /></label>
+              <label class="field"><span>목표 직무</span><input id="targetRole" required placeholder="예: 백엔드 개발자" /></label>
+              <label class="field"><span>경력 구분</span><select id="careerLevel"><option>신입</option><option>1~3년</option><option>4~7년</option><option>8년 이상</option></select></label>
+              <button class="primary-button wide-button" type="submit">비교 리포트 준비</button>
+            </form>
+            <section class="workspace-card">
+              <div class="workspace-title"><span>02</span><div><h2>나의 스펙 요약</h2><p>대시보드에 등록한 데이터를 기준으로 계산됩니다.</p></div></div>
+              <div class="profile-metrics" id="companyProfileSummary"></div>
+            </section>
+          </section>
+
+          <section class="data-source-card">
+            <div><span class="source-icon">↔</span><strong>비교 데이터 소스</strong><p>지원자 평균과 합격자 분포를 제공할 API 또는 익명 데이터셋을 연결하는 영역입니다.</p></div>
+            <span class="source-status">연동 전</span>
+          </section>
+
+          <section class="comparison-board" id="comparisonBoard">
+            <div class="comparison-empty"><span>◌</span><strong>비교 데이터 연결 준비 중</strong><p>기업·직무를 설정하면 이 영역에 지원자 평균, 내 위치, 부족한 경험과 추천 활동이 표시됩니다.</p><small>현재는 실제 타인 데이터가 없어 임의의 평균값을 표시하지 않습니다.</small></div>
+          </section>
+        </div>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+  </body>
+</html>
