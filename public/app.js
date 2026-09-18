@@ -1,4 +1,4 @@
-const state = { activities: [], category: 'all' };
+const state = { activities: [], category: 'all', page: 'dashboard' };
 const elements = {
   grid: document.querySelector('#activityGrid'),
   modal: document.querySelector('#activityModal'),
@@ -9,7 +9,13 @@ const elements = {
   dynamicFields: document.querySelector('#dynamicFields'),
   formError: document.querySelector('#formError'),
   toast: document.querySelector('#toast'),
-  sidebar: document.querySelector('#sidebar')
+  sidebar: document.querySelector('#sidebar'),
+  projectList: document.querySelector('#projectList'),
+  projectAnalysisForm: document.querySelector('#projectAnalysisForm'),
+  projectAnalysisResult: document.querySelector('#projectAnalysisResult'),
+  companyProfileSummary: document.querySelector('#companyProfileSummary'),
+  companyCompareForm: document.querySelector('#companyCompareForm'),
+  comparisonBoard: document.querySelector('#comparisonBoard')
 };
 
 const categoryMeta = {
@@ -149,15 +155,21 @@ function cardContent(activity) {
 }
 
 function renderSummary() {
+  const count = (category) => state.activities.filter((item) => item.category === category).length;
   document.querySelector('#totalCount').textContent = state.activities.length;
-  document.querySelector('#projectCount').textContent = state.activities.filter((item) => item.category === '프로젝트').length;
-  document.querySelector('#certificateCount').textContent = state.activities.filter((item) => item.category === '자격증').length;
-  document.querySelector('#paperCount').textContent = state.activities.filter((item) => item.category === '논문').length;
+  document.querySelector('#projectCount').textContent = count('프로젝트');
+  document.querySelector('#certificateCount').textContent = count('자격증');
+  document.querySelector('#externalCount').textContent = count('대외활동');
+  document.querySelector('#paperCount').textContent = count('논문');
+  document.querySelector('#languageCount').textContent = count('어학연수');
+  document.querySelector('#mentoringCount').textContent = count('멘토링');
+  document.querySelector('#contactCount').textContent = count('연락처');
 }
 
 function renderActivities() {
   const activities = [...state.activities]
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .filter((item) => item.category !== '프로젝트')
     .filter((item) => state.category === 'all' || item.category === state.category);
   if (!activities.length) {
     elements.grid.innerHTML = '<div class="empty-state"><strong>아직 등록된 활동이 없어요.</strong>새로운 활동을 추가해 커리어 기록을 시작해 보세요.</div>';
@@ -177,9 +189,46 @@ function renderActivities() {
     </article>`;
   }).join('');
 }
-function render() { renderSummary(); renderActivities(); }
+function renderProjects() {
+  const projects = state.activities.filter((item) => item.category === '프로젝트');
+  elements.projectList.innerHTML = projects.length ? projects.map((project) => `
+    <article class="project-row" data-project-id="${escapeHtml(project.id)}">
+      <span class="project-row-icon">&lt;/&gt;</span>
+      <div><strong>${escapeHtml(project.title)}</strong><small>${escapeHtml(project.details?.classification || '프로젝트')} · ${escapeHtml(formatDate(project.details?.date) || '날짜 미등록')}</small></div>
+      <button type="button">상세 보기 →</button>
+    </article>`).join('') : '<div class="empty-state"><strong>등록된 프로젝트가 없어요.</strong>프로젝트를 먼저 등록해 주세요.</div>';
+}
+
+function renderCompanyProfile() {
+  const count = (category) => state.activities.filter((item) => item.category === category).length;
+  const metrics = [
+    ['전체 경험', state.activities.length], ['프로젝트', count('프로젝트')],
+    ['자격증', count('자격증')], ['대외활동', count('대외활동')],
+    ['논문', count('논문')], ['어학·멘토링', count('어학연수') + count('멘토링')]
+  ];
+  elements.companyProfileSummary.innerHTML = metrics.map(([label, value]) => `<div class="profile-metric"><strong>${value}</strong><span>${label}</span></div>`).join('');
+}
+
+function render() { renderSummary(); renderActivities(); renderProjects(); renderCompanyProfile(); }
+
+function setPage(page, category = '') {
+  state.page = page;
+  document.querySelectorAll('[data-page-view]').forEach((view) => view.classList.toggle('active', view.dataset.pageView === page));
+  document.querySelectorAll('.nav-item[data-page]').forEach((item) => {
+    const categoryMatches = category ? item.dataset.category === category : !item.dataset.category;
+    item.classList.toggle('active', item.dataset.page === page && categoryMatches);
+  });
+  if (page === 'dashboard') {
+    state.category = category || 'all';
+    document.querySelectorAll('.category-tab').forEach((tab) => tab.classList.toggle('active', tab.dataset.category === state.category));
+    renderActivities();
+  }
+  elements.sidebar.classList.remove('open');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
 function setCategory(category) {
+  setPage('dashboard');
   state.category = category;
   document.querySelectorAll('.category-tab').forEach((tab) => tab.classList.toggle('active', tab.dataset.category === category));
   renderActivities();
@@ -254,6 +303,42 @@ async function analyzeCommits() {
   }
 }
 
+async function analyzeProjectLab(event) {
+  event.preventDefault();
+  const repositoryUrl = document.querySelector('#labRepository').value.trim();
+  const username = document.querySelector('#labUsername').value.trim();
+  const errorBox = document.querySelector('#labError');
+  const button = elements.projectAnalysisForm.querySelector('[type="submit"]');
+  errorBox.textContent = '';
+  button.disabled = true;
+  button.textContent = '커밋과 코드 분석 중…';
+  elements.projectAnalysisResult.classList.remove('has-result');
+  elements.projectAnalysisResult.innerHTML = '<div class="analysis-empty"><span>···</span><strong>GitHub 데이터를 불러오고 있습니다.</strong><p>최근 커밋의 변경 파일과 작성 코드를 확인하는 중입니다.</p></div>';
+  try {
+    const result = await request('/api/analyze-github', { method: 'POST', body: JSON.stringify({ repositoryUrl, username }) });
+    elements.projectAnalysisResult.classList.add('has-result');
+    elements.projectAnalysisResult.innerHTML = `<div class="analysis-result-head"><span>✦ AI 프로젝트 기여 분석</span><small>${escapeHtml(result.repository)} · 최근 ${result.commitCount}개 커밋</small></div><div class="analysis-result-body">${escapeHtml(result.analysis)}</div>`;
+    showToast('프로젝트 커밋 분석을 완료했습니다.');
+  } catch (error) {
+    errorBox.textContent = error.message;
+    elements.projectAnalysisResult.innerHTML = '<div class="analysis-empty"><span>!</span><strong>분석을 완료하지 못했습니다.</strong><p>입력 정보와 서버의 API 키 설정을 확인해 주세요.</p></div>';
+  } finally {
+    button.disabled = false;
+    button.textContent = '✦ 커밋 분석 시작';
+  }
+}
+
+function prepareCompanyComparison(event) {
+  event.preventDefault();
+  const company = document.querySelector('#companyName').value.trim();
+  const role = document.querySelector('#targetRole').value.trim();
+  const count = (category) => state.activities.filter((item) => item.category === category).length;
+  const rows = ['프로젝트', '자격증', '대외활동', '논문'].map((category) => `<div class="comparison-stat"><span>${category}</span><strong>${count(category)}개</strong></div>`).join('');
+  elements.comparisonBoard.classList.add('ready');
+  elements.comparisonBoard.innerHTML = `<div class="comparison-ready-head"><h2>${escapeHtml(company)} · ${escapeHtml(role)} 비교 리포트</h2><p>내 데이터 영역은 준비됐습니다. 지원자 통계가 연결되면 동일 기준으로 자동 비교됩니다.</p></div><div class="comparison-columns"><section class="comparison-column"><h3>나의 현재 스펙</h3>${rows}</section><section class="comparison-column pending"><h3>지원자 비교군</h3><p class="pending-copy">아직 비교 데이터가 연결되지 않았습니다.<br />향후 익명 지원자 데이터나 채용 플랫폼 API를 연결할 영역입니다.</p></section></div>`;
+  showToast('기업 비교 화면의 기준을 설정했습니다.');
+}
+
 function detailValue(key, value, details) {
   const linkKeys = ['githubRepository', 'outputLink', 'paperLink'];
   if (linkKeys.includes(key)) {
@@ -299,12 +384,13 @@ elements.dynamicFields.addEventListener('change', (event) => {
 elements.dynamicFields.addEventListener('click', (event) => { if (event.target.id === 'analyzeButton') analyzeCommits(); });
 
 document.querySelectorAll('.category-tab').forEach((button) => button.addEventListener('click', () => setCategory(button.dataset.category)));
-document.querySelectorAll('.nav-item[data-filter]').forEach((button) => button.addEventListener('click', () => {
-  document.querySelectorAll('.nav-item').forEach((item) => item.classList.remove('active')); button.classList.add('active');
-  setCategory(button.dataset.filter); elements.sidebar.classList.remove('open');
-}));
+document.querySelectorAll('.nav-item[data-page]').forEach((button) => button.addEventListener('click', () => setPage(button.dataset.page, button.dataset.category || '')));
+document.querySelector('[data-page-link]').addEventListener('click', (event) => { event.preventDefault(); setPage(event.currentTarget.dataset.pageLink); });
 document.querySelector('[data-filter-shortcut]').addEventListener('click', () => setCategory('all'));
 document.querySelector('#menuButton').addEventListener('click', () => elements.sidebar.classList.toggle('open'));
+document.querySelector('[data-open-project]').addEventListener('click', () => setModal(true, '프로젝트'));
+elements.projectAnalysisForm.addEventListener('submit', analyzeProjectLab);
+elements.companyCompareForm.addEventListener('submit', prepareCompanyComparison);
 
 elements.form.addEventListener('submit', async (event) => {
   event.preventDefault(); elements.formError.textContent = '';
@@ -332,6 +418,13 @@ elements.grid.addEventListener('click', async (event) => {
     return;
   }
   if (event.target.closest('.view') || !event.target.closest('.card-actions')) openDetail(activity);
+});
+
+elements.projectList.addEventListener('click', (event) => {
+  const row = event.target.closest('[data-project-id]');
+  if (!row) return;
+  const project = state.activities.find((item) => item.id === row.dataset.projectId);
+  if (project) openDetail(project);
 });
 
 document.querySelector('#closeDetail').addEventListener('click', closeDetail);

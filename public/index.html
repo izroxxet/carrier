@@ -14,13 +14,12 @@
   <body>
     <div class="app-shell">
       <aside class="sidebar" id="sidebar">
-        <a class="brand" href="#dashboard" aria-label="Carrier 홈">Carrier<span>.</span></a>
+        <a class="brand" href="#dashboard" data-page-link="dashboard" aria-label="Carrier 홈">Carrier<span>.</span></a>
         <nav class="main-nav" aria-label="주 메뉴">
-          <button class="nav-item active" data-filter="all"><span class="nav-icon">⌂</span><span>대시보드</span></button>
-          <button class="nav-item" data-filter="all"><span class="nav-icon">◇</span><span>내 커리어</span></button>
-          <button class="nav-item" data-filter="프로젝트"><span class="nav-icon">▣</span><span>프로젝트</span></button>
-          <button class="nav-item" data-filter="대외활동"><span class="nav-icon">◷</span><span>활동 관리</span></button>
-          <button class="nav-item" data-filter="연락처"><span class="nav-icon">▤</span><span>연락처</span></button>
+          <button class="nav-item active" data-page="dashboard"><span class="nav-icon">⌂</span><span>대시보드 · 내 커리어</span></button>
+          <button class="nav-item" data-page="projects"><span class="nav-icon">▣</span><span>프로젝트</span></button>
+          <button class="nav-item" data-page="company"><span class="nav-icon">◷</span><span>기업 분석</span></button>
+          <button class="nav-item" data-page="dashboard" data-category="연락처"><span class="nav-icon">▤</span><span>연락처</span></button>
         </nav>
         <div class="nav-divider"></div>
         <button class="nav-item setting-button"><span class="nav-icon">⚙</span><span>설정</span></button>
@@ -32,23 +31,23 @@
       </aside>
 
       <main class="main-content">
-        <header class="topbar">
-          <button class="menu-button" id="menuButton" aria-label="메뉴 열기">☰</button>
-          <div class="top-label"><span class="live-dot"></span> 내 커리어 기록</div>
-          <div class="profile"><button class="notification" aria-label="알림">♧<i></i></button><span class="avatar">김</span><strong>김개발님</strong><span>⌄</span></div>
-        </header>
+        <button class="menu-button floating-menu" id="menuButton" aria-label="메뉴 열기">☰</button>
 
-        <div class="page-content" id="dashboard">
+        <div class="page-content app-page active" id="dashboard" data-page-view="dashboard">
           <section class="welcome">
             <div><p class="kicker">CAREER ARCHIVE</p><h1>김개발님, 오늘도 좋은 하루예요!</h1><p>지금까지 쌓아온 경험이 더 큰 기회를 만들어줘요.</p></div>
             <blockquote>꾸준히 쌓아온 경험은,<br />언젠가 반드시 빛을 발합니다.</blockquote>
           </section>
 
-          <section class="summary-panel" aria-label="등록 데이터 요약">
+          <section class="summary-panel compact-summary" aria-label="등록 데이터 요약">
             <article class="summary-item blue"><span class="summary-icon">▱</span><div><strong id="totalCount">0</strong><small>총 등록 데이터</small></div><em>전체 기록</em></article>
             <article class="summary-item orange"><span class="summary-icon">▣</span><div><strong id="projectCount">0</strong><small>프로젝트</small></div><em>코드와 결과물</em></article>
-            <article class="summary-item yellow"><span class="summary-icon">☆</span><div><strong id="certificateCount">0</strong><small>보유 자격증</small></div><em>취득 기록</em></article>
-            <article class="summary-item sky"><span class="summary-icon">▤</span><div><strong id="paperCount">0</strong><small>작성한 논문</small></div><em>연구 결과</em></article>
+            <article class="summary-item green"><span class="summary-icon">☆</span><div><strong id="certificateCount">0</strong><small>자격증</small></div></article>
+            <article class="summary-item violet"><span class="summary-icon">◷</span><div><strong id="externalCount">0</strong><small>대외활동</small></div></article>
+            <article class="summary-item rose"><span class="summary-icon">▤</span><div><strong id="paperCount">0</strong><small>논문</small></div></article>
+            <article class="summary-item yellow"><span class="summary-icon">A+</span><div><strong id="languageCount">0</strong><small>어학연수</small></div></article>
+            <article class="summary-item purple"><span class="summary-icon">1:1</span><div><strong id="mentoringCount">0</strong><small>멘토링</small></div></article>
+            <article class="summary-item slate"><span class="summary-icon">▦</span><div><strong id="contactCount">0</strong><small>연락처</small></div></article>
           </section>
 
           <section class="activity-section" id="activities">
@@ -58,7 +57,6 @@
             </div>
             <div class="category-tabs" id="categoryTabs" aria-label="활동 분류">
               <button class="category-tab active" data-category="all">전체</button>
-              <button class="category-tab" data-category="프로젝트">프로젝트</button>
               <button class="category-tab" data-category="자격증">자격증</button>
               <button class="category-tab" data-category="대외활동">대외활동</button>
               <button class="category-tab" data-category="논문">논문</button>
@@ -72,6 +70,55 @@
           <section class="bottom-banners">
             <div class="insight-banner"><span class="banner-icon">▥</span><div><strong>지금까지 정말 잘해왔어요!</strong><p>기록한 경험을 바탕으로 나만의 커리어 이야기를 만들어보세요.</p></div><button data-filter-shortcut="all">내 기록 보기 →</button></div>
             <div class="insight-banner light"><span class="banner-icon">✦</span><div><strong>새로운 연결을 만드셨나요?</strong><p>받은 명함을 연락처로 안전하게 기록해두세요.</p></div><button data-open-contact>연락처 추가 →</button></div>
+          </section>
+        </div>
+
+        <div class="page-content app-page" data-page-view="projects">
+          <section class="page-hero project-hero">
+            <div><p class="kicker">PROJECT INTELLIGENCE</p><h1>프로젝트 AI 분석</h1><p>GitHub 커밋을 바탕으로 내가 작성한 코드와 실제 기여를 포트폴리오 언어로 정리합니다.</p></div>
+            <span class="page-hero-icon">&lt;/&gt;</span>
+          </section>
+          <section class="project-lab-grid">
+            <form class="workspace-card analysis-form" id="projectAnalysisForm">
+              <div class="workspace-title"><span>01</span><div><h2>저장소 연결</h2><p>공개 저장소 주소와 본인의 GitHub 아이디를 입력하세요.</p></div></div>
+              <label class="field"><span>GitHub 저장소 주소</span><input id="labRepository" type="url" required placeholder="https://github.com/owner/repository" /></label>
+              <label class="field"><span>내 GitHub 아이디</span><input id="labUsername" required placeholder="commit author username" /></label>
+              <p class="form-error" id="labError" role="alert"></p>
+              <button class="primary-button wide-button" type="submit">✦ 커밋 분석 시작</button>
+            </form>
+            <aside class="workspace-card process-card">
+              <div class="workspace-title"><span>02</span><div><h2>분석 항목</h2><p>AI가 아래 내용을 근거 중심으로 정리합니다.</p></div></div>
+              <ol class="process-list"><li><i>1</i><span><strong>작성 코드</strong>변경 파일과 patch 확인</span></li><li><i>2</i><span><strong>기술 기여</strong>구현 기능과 사용 기술 정리</span></li><li><i>3</i><span><strong>문제 해결</strong>커밋에서 확인되는 해결 과정</span></li><li><i>4</i><span><strong>포트폴리오</strong>이력서용 한 문장 생성</span></li></ol>
+            </aside>
+          </section>
+          <section class="analysis-output" id="projectAnalysisResult">
+            <div class="analysis-empty"><span>✦</span><strong>아직 분석 결과가 없습니다.</strong><p>저장소를 연결하면 최근 커밋을 기반으로 프로젝트 기여 분석이 표시됩니다.</p></div>
+          </section>
+          <section class="project-records">
+            <div class="section-heading"><div><h2>등록된 프로젝트</h2><p>대시보드에 저장된 프로젝트를 빠르게 확인하세요.</p></div><button class="secondary-button" data-open-project>＋ 프로젝트 등록</button></div>
+            <div class="project-list" id="projectList"></div>
+          </section>
+        </div>
+
+        <div class="page-content app-page" data-page-view="company">
+          <section class="page-hero company-hero">
+            <div><p class="kicker">CAREER BENCHMARK</p><h1>기업 · 스펙 비교</h1><p>지원 기업과 직무를 기준으로 내 경험의 강점과 보완점을 비교하는 공간입니다.</p></div>
+            <span class="page-hero-icon">◎</span>
+          </section>
+          <section class="company-grid">
+            <form class="workspace-card" id="companyCompareForm">
+              <div class="workspace-title"><span>01</span><div><h2>비교 기준 설정</h2><p>분석할 기업과 목표 직무를 입력하세요.</p></div></div>
+              <label class="field"><span>기업명</span><input id="companyName" required placeholder="예: 카카오" /></label>
+              <label class="field"><span>목표 직무</span><input id="targetRole" required placeholder="예: 백엔드 개발자" /></label>
+              <button class="primary-button wide-button" type="submit">비교 리포트 준비</button>
+            </form>
+            <section class="workspace-card my-profile-card">
+              <div class="workspace-title"><span>02</span><div><h2>나의 스펙 요약</h2><p>현재 등록된 데이터를 기준으로 계산됩니다.</p></div></div>
+              <div class="profile-metrics" id="companyProfileSummary"></div>
+            </section>
+          </section>
+          <section class="comparison-board" id="comparisonBoard">
+            <div class="comparison-empty"><span>◌</span><strong>비교 데이터 연결 준비 중</strong><p>기업·직무를 설정하면 이 영역에 지원자 평균, 내 위치, 부족한 경험과 추천 활동이 표시됩니다.</p><small>지원자 통계 데이터 API 또는 자체 익명 데이터셋 연결이 필요합니다.</small></div>
           </section>
         </div>
       </main>
