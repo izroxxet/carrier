@@ -1,12 +1,12 @@
 (function initializeCarrier() {
   const categoryMeta = {
-    프로젝트: { symbol: '</>', subtitle: 'PROJECT' },
-    자격증: { symbol: 'CERT', subtitle: 'CERTIFICATE' },
-    대외활동: { symbol: 'ACT', subtitle: 'EXTERNAL ACTIVITY' },
-    논문: { symbol: 'DOC', subtitle: 'PAPER' },
-    어학연수: { symbol: 'A+', subtitle: 'LANGUAGE PROGRAM' },
-    멘토링: { symbol: '1:1', subtitle: 'MENTORING' },
-    연락처: { symbol: 'CARD', subtitle: 'CONTACT' }
+    프로젝트: { symbol: '💻', subtitle: 'PROJECT' },
+    자격증: { symbol: '📜', subtitle: 'CERTIFICATE' },
+    대외활동: { symbol: '🚀', subtitle: 'EXTERNAL ACTIVITY' },
+    논문: { symbol: '📄', subtitle: 'PAPER' },
+    어학연수: { symbol: '🌍', subtitle: 'LANGUAGE PROGRAM' },
+    멘토링: { symbol: '🤝', subtitle: 'MENTORING' },
+    연락처: { symbol: '💼', subtitle: 'CONTACT' }
   };
 
   function escapeHtml(value = '') {
@@ -62,7 +62,7 @@
 
   function readFile(file) {
     if (!file) return Promise.resolve('');
-    if (file.size > 2 * 1024 * 1024) return Promise.reject(new Error('첨부파일은 2MB 이하만 등록할 수 있습니다.'));
+    if (file.size > 2 * 1024 * 1024) return Promise.reject(new Error('첨부파일은 항목당 최대 2MB까지 저장할 수 있습니다.'));
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => resolve(reader.result);
@@ -77,13 +77,11 @@
     sidebar.innerHTML = `
       <a class="brand" href="/index.html" aria-label="Carrier 홈">Carrier<span>.</span></a>
       <nav class="main-nav" aria-label="주 메뉴">
-        <a class="nav-item ${activePage === 'dashboard' ? 'active' : ''}" href="/index.html"><span class="nav-icon">⌂</span><span>대시보드 · 내 커리어</span></a>
-        <a class="nav-item ${activePage === 'projects' ? 'active' : ''}" href="/projects.html"><span class="nav-icon">▣</span><span>프로젝트</span></a>
-        <a class="nav-item ${activePage === 'company' ? 'active' : ''}" href="/company-analysis.html"><span class="nav-icon">◷</span><span>기업 분석</span></a>
-        <a class="nav-item" href="/index.html#contacts"><span class="nav-icon">▤</span><span>연락처</span></a>
+        <a class="nav-item ${activePage === 'dashboard' ? 'active' : ''}" href="/index.html"><span class="nav-icon">🏠</span><span>대시보드 · 내 커리어</span></a>
+        <a class="nav-item ${activePage === 'projects' ? 'active' : ''}" href="/projects.html"><span class="nav-icon">💻</span><span>프로젝트</span></a>
+        <a class="nav-item ${activePage === 'company' ? 'active' : ''}" href="/company-analysis.html"><span class="nav-icon">🎯</span><span>기업 분석</span></a>
+        <a class="nav-item ${activePage === 'writing' ? 'active' : ''}" href="/writing.html"><span class="nav-icon">✍️</span><span>글 작성</span></a>
       </nav>
-      <div class="nav-divider"></div>
-      <button class="nav-item setting-button" type="button"><span class="nav-icon">⚙</span><span>설정</span></button>
       <div class="sidebar-banner"><span>더 나은 커리어를 위해</span><strong>지금, 한 걸음 더.</strong><p>Build your next chapter<br />with Carrier.</p><div class="mountains"><i></i><i></i><i></i></div></div>`;
   }
 

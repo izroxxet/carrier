@@ -8,10 +8,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/css/common.css" />
-    <link rel="stylesheet" href="/css/dashboard.css" />
-    <script src="/js/common.js" defer></script>
-    <script src="/js/dashboard.js" defer></script>
+    <link rel="stylesheet" href="/css/common.css?v=20260919-4" />
+    <link rel="stylesheet" href="/css/dashboard.css?v=20260919-4" />
+    <script src="/js/common.js?v=20260919-5" defer></script>
+    <script src="/js/dashboard.js?v=20260919-5" defer></script>
   </head>
   <body data-page="dashboard">
     <div class="app-shell">
@@ -20,19 +20,19 @@
         <button class="menu-button floating-menu" id="menuButton" aria-label="메뉴 열기">☰</button>
         <div class="page-content">
           <section class="welcome">
-            <div><p class="kicker">CAREER ARCHIVE</p><h1>김개발님, 오늘도 좋은 하루예요!</h1><p>대시보드와 내 커리어 기록을 한 화면에서 관리하세요.</p></div>
+            <div><p class="kicker">CAREER ARCHIVE</p><h1>이지훈님, 오늘도 좋은 하루예요!</h1><p>대시보드와 내 커리어 기록을 한 화면에서 관리하세요.</p></div>
             <blockquote>꾸준히 쌓아온 경험은,<br />언젠가 반드시 빛을 발합니다.</blockquote>
           </section>
 
           <section class="summary-panel" aria-label="등록 데이터 요약">
-            <article class="summary-item blue"><span class="summary-icon">▱</span><div><strong id="totalCount">0</strong><small>전체</small></div></article>
-            <article class="summary-item orange"><span class="summary-icon">▣</span><div><strong id="projectCount">0</strong><small>프로젝트</small></div></article>
-            <article class="summary-item green"><span class="summary-icon">☆</span><div><strong id="certificateCount">0</strong><small>자격증</small></div></article>
-            <article class="summary-item violet"><span class="summary-icon">◷</span><div><strong id="externalCount">0</strong><small>대외활동</small></div></article>
-            <article class="summary-item rose"><span class="summary-icon">▤</span><div><strong id="paperCount">0</strong><small>논문</small></div></article>
-            <article class="summary-item yellow"><span class="summary-icon">A+</span><div><strong id="languageCount">0</strong><small>어학연수</small></div></article>
-            <article class="summary-item purple"><span class="summary-icon">1:1</span><div><strong id="mentoringCount">0</strong><small>멘토링</small></div></article>
-            <article class="summary-item slate"><span class="summary-icon">▦</span><div><strong id="contactCount">0</strong><small>연락처</small></div></article>
+            <article class="summary-item award"><span class="summary-icon">🏆</span><div><strong id="awardCount">0</strong><small>수상</small></div></article>
+            <article class="summary-item orange"><span class="summary-icon">💻</span><div><strong id="projectCount">0</strong><small>프로젝트</small></div></article>
+            <article class="summary-item green"><span class="summary-icon">📜</span><div><strong id="certificateCount">0</strong><small>자격증</small></div></article>
+            <article class="summary-item violet"><span class="summary-icon">🚀</span><div><strong id="externalCount">0</strong><small>대외활동</small></div></article>
+            <article class="summary-item rose"><span class="summary-icon">📄</span><div><strong id="paperCount">0</strong><small>논문</small></div></article>
+            <article class="summary-item yellow"><span class="summary-icon">🌍</span><div><strong id="languageCount">0</strong><small>어학연수</small></div></article>
+            <article class="summary-item purple"><span class="summary-icon">🤝</span><div><strong id="mentoringCount">0</strong><small>멘토링</small></div></article>
+            <article class="summary-item slate"><span class="summary-icon">💼</span><div><strong id="contactCount">0</strong><small>연락처</small></div></article>
           </section>
 
           <section class="activity-section" id="activities">
@@ -42,6 +42,7 @@
             </div>
             <div class="category-tabs" aria-label="활동 분류">
               <button class="category-tab active" data-category="all">전체</button>
+              <button class="category-tab award-filter" data-category="수상">🏆 수상</button>
               <button class="category-tab" data-category="자격증">자격증</button>
               <button class="category-tab" data-category="대외활동">대외활동</button>
               <button class="category-tab" data-category="논문">논문</button>
@@ -53,8 +54,8 @@
           </section>
 
           <section class="bottom-banners">
-            <div class="insight-banner"><span class="banner-icon">&lt;/&gt;</span><div><strong>프로젝트 기여를 정리하고 싶나요?</strong><p>GitHub 커밋을 AI로 분석해 포트폴리오 문장으로 바꿔보세요.</p></div><a href="/projects.html">프로젝트 분석 →</a></div>
-            <div class="insight-banner light"><span class="banner-icon">◎</span><div><strong>지원 기업을 정하셨나요?</strong><p>내 스펙과 비교 데이터가 만나는 기업 분석 페이지를 준비했어요.</p></div><a href="/company-analysis.html">기업 분석 →</a></div>
+            <div class="insight-banner"><span class="banner-icon">💻</span><div><strong>프로젝트 기여를 정리하고 싶나요?</strong><p>GitHub 커밋을 AI로 분석해 포트폴리오 문장으로 바꿔보세요.</p></div><a href="/projects.html">프로젝트 분석 →</a></div>
+            <div class="insight-banner light"><span class="banner-icon">🎯</span><div><strong>지원 기업을 정하셨나요?</strong><p>내 스펙과 비교 데이터가 만나는 기업 분석 페이지를 준비했어요.</p></div><a href="/company-analysis.html">기업 분석 →</a></div>
           </section>
         </div>
       </main>
@@ -65,7 +66,7 @@
         <div class="modal-header"><div><span class="modal-kicker">NEW ACTIVITY</span><h2 id="modalTitle">새로운 활동 추가</h2></div><button class="close-button" type="button" data-close-modal aria-label="닫기">×</button></div>
         <form id="activityForm">
           <label class="field full"><span>활동 분류 <b>*</b></span><select id="categorySelect" required><option value="">분류를 선택해 주세요</option><option>자격증</option><option>대외활동</option><option>논문</option><option>어학연수</option><option>멘토링</option><option>연락처</option></select></label>
-          <div id="dynamicFields"><div class="form-placeholder"><span>＋</span><p>분류를 선택하면 필요한 입력 항목이 나타납니다.</p></div></div>
+          <div id="dynamicFields"><div class="form-placeholder"><span>🗂️</span><p>분류를 선택하면 필요한 입력 항목이 나타납니다.</p></div></div>
           <p class="form-help">첨부파일은 항목당 최대 2MB까지 저장할 수 있습니다.</p>
           <p class="form-error" id="formError" role="alert"></p>
           <div class="modal-actions"><button type="button" class="secondary-button" data-close-modal>취소</button><button class="primary-button" type="submit">저장하기</button></div>

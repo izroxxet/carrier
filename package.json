@@ -5,8 +5,18 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "slides": "node scripts/generate-presentation.js",
+    "presentation-doc": "node scripts/generate-presentation-document.js"
   },
-  "engines": { "node": ">=18" },
-  "license": "MIT"
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "pptxgenjs": "^4.0.1"
+  },
+  "dependencies": {
+    "docx": "^9.7.1"
+  }
 }

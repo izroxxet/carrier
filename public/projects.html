@@ -8,10 +8,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/css/common.css" />
-    <link rel="stylesheet" href="/css/projects.css" />
-    <script src="/js/common.js" defer></script>
-    <script src="/js/projects.js" defer></script>
+    <link rel="stylesheet" href="/css/common.css?v=20260919-4" />
+    <link rel="stylesheet" href="/css/projects.css?v=20260919-4" />
+    <script src="/js/common.js?v=20260919-5" defer></script>
+    <script src="/js/projects.js?v=20260919-5" defer></script>
   </head>
   <body data-page="projects">
     <div class="app-shell">
@@ -21,29 +21,24 @@
         <div class="page-content">
           <section class="page-hero">
             <div><p class="kicker">PROJECT INTELLIGENCE</p><h1>프로젝트 AI 분석</h1><p>GitHub 커밋을 바탕으로 내가 작성한 코드와 실제 기여를 포트폴리오 언어로 정리합니다.</p></div>
-            <div class="hero-side"><span>&lt;/&gt;</span><strong id="projectCount">0</strong><small>등록 프로젝트</small></div>
+            <div class="hero-side"><span>💻</span><strong id="projectCount">0</strong><small>등록 프로젝트</small></div>
           </section>
 
           <section class="project-lab-grid">
+            <section class="workspace-card project-picker-card">
+              <div class="workspace-title project-picker-title"><span>01</span><div><h2>등록된 프로젝트</h2><p>프로젝트를 선택해 저장된 저장소로 바로 분석하세요.</p></div><button class="primary-button compact-add-button" type="button" data-open-project><span>＋</span> 프로젝트 등록</button></div>
+              <div class="project-list compact-project-list" id="projectList"></div>
+            </section>
             <form class="workspace-card" id="projectAnalysisForm">
-              <div class="workspace-title"><span>01</span><div><h2>저장소 연결</h2><p>저장소 주소와 본인의 GitHub 아이디를 입력하세요.</p></div></div>
+              <div class="workspace-title"><span>02</span><div><h2>저장소 연결</h2><p>저장소 주소와 본인의 GitHub 아이디를 입력하세요.</p></div></div>
               <label class="field"><span>GitHub 저장소 주소</span><input id="labRepository" type="url" required placeholder="https://github.com/owner/repository" /></label>
               <label class="field"><span>내 GitHub 아이디</span><input id="labUsername" required placeholder="commit author username" /></label>
               <p class="form-error" id="labError" role="alert"></p>
-              <button class="primary-button wide-button" type="submit">✦ 커밋 분석 시작</button>
+              <button class="primary-button wide-button" type="submit">✨ 프로젝트 · 커밋 분석 시작</button>
             </form>
-            <aside class="workspace-card">
-              <div class="workspace-title"><span>02</span><div><h2>분석 항목</h2><p>AI가 아래 내용을 근거 중심으로 정리합니다.</p></div></div>
-              <ol class="process-list"><li><i>1</i><span><strong>작성 코드</strong>변경 파일과 patch 확인</span></li><li><i>2</i><span><strong>기술 기여</strong>구현 기능과 사용 기술 정리</span></li><li><i>3</i><span><strong>문제 해결</strong>커밋에서 확인되는 해결 과정</span></li><li><i>4</i><span><strong>포트폴리오</strong>이력서용 한 문장 생성</span></li></ol>
-            </aside>
           </section>
 
-          <section class="analysis-output" id="projectAnalysisResult"><div class="analysis-empty"><span>✦</span><strong>아직 분석 결과가 없습니다.</strong><p>저장소를 연결하거나 아래 프로젝트의 분석 버튼을 눌러 시작하세요.</p></div></section>
-
-          <section class="project-records">
-            <div class="section-heading"><div><h2>등록된 프로젝트</h2><p>프로젝트를 선택하면 저장된 GitHub 정보로 바로 분석할 수 있습니다.</p></div><button class="primary-button" data-open-project><span>＋</span> 프로젝트 등록</button></div>
-            <div class="project-list" id="projectList"></div>
-          </section>
+          <section class="analysis-output" id="projectAnalysisResult"><div class="analysis-empty"><span>✨</span><strong>아직 분석 결과가 없습니다.</strong><p>저장소를 연결하거나 등록된 프로젝트의 분석 버튼을 눌러 시작하세요.</p></div></section>
         </div>
       </main>
     </div>
@@ -58,11 +53,12 @@
             <label class="field"><span>날짜 <b>*</b></span><input name="date" type="date" required /></label>
             <label class="field full"><span>수상 내역</span><input name="award" placeholder="예: 대상, 우수상" /></label>
             <label class="field full"><span>주요 활동 <b>*</b></span><textarea name="activities" required placeholder="담당 역할과 구현 내용"></textarea></label>
-            <label class="field"><span>GitHub 저장소</span><input name="githubRepository" type="url" placeholder="https://github.com/owner/repo" /></label>
-            <label class="field"><span>내 GitHub 아이디</span><input name="githubUsername" placeholder="commit author username" /></label>
+            <label class="field"><span>GitHub 저장소 <b>*</b></span><input name="githubRepository" type="url" required placeholder="https://github.com/owner/repo" /></label>
+            <label class="field"><span>내 GitHub 아이디 <b>*</b></span><input name="githubUsername" required placeholder="commit author username" /></label>
+            <label class="field full"><span>증빙자료 이미지</span><input name="evidenceImage" type="file" accept="image/png,image/jpeg,image/webp" /><small class="project-evidence-note" id="projectEvidenceStatus">첨부파일은 항목당 최대 2MB까지 저장할 수 있습니다.</small></label>
           </div>
           <p class="form-error" id="projectFormError" role="alert"></p>
-          <div class="modal-actions"><button type="button" class="secondary-button" data-close-project>취소</button><button class="primary-button" type="submit">등록하기</button></div>
+          <div class="modal-actions"><button type="button" class="secondary-button" data-close-project>취소</button><button class="primary-button" id="projectSubmitButton" type="submit">등록하기</button></div>
         </form>
       </section>
     </div>

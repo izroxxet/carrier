@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="내 커리어 스펙 기반 AI 지원서 작성" />
+    <title>Carrier — 글 작성</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/common.css?v=20260919-4" />
+    <link rel="stylesheet" href="/css/writing.css?v=20260919-4" />
+    <script src="/js/common.js?v=20260919-5" defer></script>
+    <script src="/js/writing.js?v=20260919-4" defer></script>
+  </head>
+  <body data-page="writing">
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar"></aside>
+      <main class="main-content">
+        <button class="menu-button floating-menu" id="menuButton" aria-label="메뉴 열기">☰</button>
+        <div class="page-content">
+          <section class="writing-hero">
+            <div><p class="kicker">AI APPLICATION WRITER</p><h1>내 경험으로 완성하는 지원서</h1><p>지원 기업과 직무, 실제 공고·문항을 입력하면 등록한 스펙에서 적합한 근거를 골라 형식과 톤에 맞는 초안을 작성합니다.</p></div>
+            <span class="writing-hero-icon">✍️</span>
+          </section>
+
+          <section class="writing-layout">
+            <form class="writing-form-card" id="writingForm">
+              <div class="card-heading"><span>01</span><div><h2>지원 조건 입력</h2><p>기업과 직무는 필수이며, 실제 문항을 넣을수록 정확합니다.</p></div></div>
+              <div class="form-grid writing-fields">
+                <label class="field"><span>기업명 <b>*</b></span><input id="companyName" maxlength="100" required placeholder="예: 카카오" /></label>
+                <label class="field"><span>지원 직무 <b>*</b></span><input id="targetRole" maxlength="100" required placeholder="예: 백엔드 개발자" /></label>
+                <label class="field"><span>지원서 유형</span><select id="applicationType"><option>문항형 자기소개서</option><option>자유양식 자기소개서</option><option>입사지원서</option><option>경력기술서</option></select></label>
+                <label class="field"><span>경력 구분</span><select id="careerLevel"><option>신입</option><option>1~3년</option><option>4~7년</option><option>8년 이상</option></select></label>
+                <label class="field"><span>톤앤매너</span><select id="tone"><option>논리적이고 진정성 있게</option><option>간결하고 자신감 있게</option><option>도전적이고 열정적으로</option><option>차분하고 전문적으로</option></select></label>
+                <label class="field"><span>문항별 분량</span><select id="answerLength"><option>300자 내외</option><option selected>500자 내외</option><option>700자 내외</option><option>1000자 내외</option></select></label>
+                <label class="field full"><span>채용공고 상세 <small>(선택)</small></span><textarea id="jobDescription" rows="5" maxlength="12000" placeholder="주요 업무, 자격요건, 우대사항을 붙여넣으세요."></textarea></label>
+                <label class="field full"><span>실제 지원 문항·양식 <small>(선택)</small></span><textarea id="formQuestions" rows="6" maxlength="12000" placeholder="예: 1. 지원 동기와 입사 후 목표를 작성해 주세요. (700자)&#10;2. 직무 역량을 보여주는 경험을 작성해 주세요. (1000자)"></textarea><small class="field-guide">비워두면 공식 양식을 찾았다고 가정하지 않고 기업·직무에 적합한 일반 문항을 구성합니다.</small></label>
+                <label class="field full"><span>추가 요청 <small>(선택)</small></span><textarea id="additionalRequest" rows="3" maxlength="3000" placeholder="강조할 경험, 피하고 싶은 표현, 반드시 포함할 내용 등을 입력하세요."></textarea></label>
+              </div>
+              <p class="writing-error" id="writingError" role="alert"></p>
+              <button class="primary-button generate-button" id="generateButton" type="submit">✨ 지원서 초안 만들기</button>
+            </form>
+
+            <aside class="writing-side">
+              <section class="side-card">
+                <div class="card-heading compact"><span>02</span><div><h2>활용할 커리어</h2><p>현재 등록된 데이터 기준</p></div></div>
+                <div class="writing-profile" id="writingProfile"><span>불러오는 중…</span></div>
+              </section>
+              <section class="privacy-card"><span class="privacy-icon">🔒</span><div><strong>개인정보 제외</strong><p>연락처와 사진·PDF 등 첨부파일은 AI에 전송하지 않습니다.</p></div></section>
+              <section class="model-card"><div><strong>Mindlogic AI</strong><p>지원서 작성 모델</p></div><span id="writingStatus">연결 확인 중</span></section>
+            </aside>
+          </section>
+
+          <section class="writing-history-card">
+            <div class="history-heading"><div><span>SAVED WRITINGS</span><h2>저장한 글</h2><p>AI가 작성한 지원서를 저장하고 다시 열어보거나 Word로 내려받을 수 있습니다.</p></div><strong id="writingHistoryCount">0</strong></div>
+            <div class="writing-history-list" id="writingHistory"><div class="history-empty">저장된 글을 불러오는 중입니다.</div></div>
+          </section>
+
+          <section class="writing-result" id="writingResult" aria-live="polite">
+            <div class="result-empty"><span>✨</span><strong>지원 조건을 입력해 주세요</strong><p>내 스펙에서 직무와 연결되는 경험을 선별해 문항별 답변과 검토 리포트를 만듭니다.</p></div>
+          </section>
+        </div>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+  </body>
+</html>
